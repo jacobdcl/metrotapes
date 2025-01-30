@@ -1,23 +1,41 @@
 import styled from 'styled-components'
 
 const SignContainer = styled.div`
-  background: #000;
-  padding: 1.5rem 1.8rem 2rem;
-  border-top: 2px solid white;
-  border-bottom: 2px solid white;
+  background-color: #000;
+  background-image: url('/subwaysign.jpg');
+  background-repeat: repeat;
+  background-position: center;
+  background-size: 100%;
+  padding: 1.2rem 1.5rem 2rem 1.2rem;
   width: 100%;
   max-width: 700px;
   height: 100%;
   border-radius: 15px 0 0 15px;
   margin-top: 2rem;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.3),
+    0 8px 12px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .55);
+    border-radius: 15px 0 0 15px;
+    z-index: -1;
+  }
 
   @media (min-width: 768px) {
     max-width: 900px;
-    padding: 2rem 2.5rem 2.5rem;
+    padding: 1.5rem 2.5rem 2.5rem;
   }
 `
 
 const StationText = styled.h1`
+  position: relative;
   color: white;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 2.2rem;
@@ -29,6 +47,7 @@ const StationText = styled.h1`
   padding-right: 3.5rem;
   border-bottom: 4px solid white;
   margin-bottom: 16px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 
   @media (min-width: 768px) {
     font-size: 4.5rem;
@@ -39,6 +58,7 @@ const StationText = styled.h1`
 `
 
 const SubwayLines = styled.div`
+  position: relative;
   display: flex;
   gap: 8px;
 
@@ -59,6 +79,11 @@ const SubwayLine = styled.div`
   font-weight: bold;
   font-size: 1.3rem;
   background-color: ${props => props.color};
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 
   @media (min-width: 768px) {
     width: 52px;

@@ -8,20 +8,11 @@ const VideoContainer = styled.div`
   height: 100vh;
   pointer-events: none;
   overflow: hidden;
-  background: #000; /* Changed to black to match video edges */
+  background: #000;
   z-index: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3); // Optional overlay to make text more readable
-  }
 `
 
 const AspectRatioBox = styled.div`
