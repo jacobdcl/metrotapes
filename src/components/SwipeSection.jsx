@@ -8,7 +8,7 @@ const SwipeContainer = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 12rem; // Smaller height for mobile
+  height: 12rem;
   display: flex;
   align-items: flex-end;
   pointer-events: none;
@@ -20,8 +20,8 @@ const SwipeContainer = styled.div`
 
 const CardWrapper = styled.div`
   position: absolute;
-  left: -20px;
-  bottom: 1rem; // Higher position for mobile
+  left: -10px;
+  bottom: 3rem; // Higher position for mobile
   z-index: 2;
   pointer-events: auto;
   transform: scale(0.85); // Slightly smaller on mobile

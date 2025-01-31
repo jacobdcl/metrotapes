@@ -2,6 +2,7 @@ import styled, { keyframes } from 'styled-components'
 import { useSpring, animated } from '@react-spring/web'
 import { useDrag } from '@use-gesture/react'
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const floatX = keyframes`
   0% { transform: translateX(0px); }
@@ -17,7 +18,7 @@ const floatY = keyframes`
 
 const tilt = keyframes`
   0% { transform: rotate(0deg); }
-  50% { transform: rotate(-3deg); }
+  50% { transform: rotate(-5deg); }
   100% { transform: rotate(0deg); }
 `
 
@@ -71,7 +72,7 @@ export default function MetroCard({ onSwipeComplete }) {
         })
     }
 
-    const bind = useDrag(({ active, movement: [mx], cancel, direction: [dx] }) => {
+    const bind = useDrag(({ active, movement: [mx], cancel }) => {
         setIsDragging(active)
 
         if (active && mx > window.innerWidth / 4) {
@@ -99,4 +100,8 @@ export default function MetroCard({ onSwipeComplete }) {
             />
         </CardContainer>
     )
+}
+
+MetroCard.propTypes = {
+    onSwipeComplete: PropTypes.func.isRequired,
 } 

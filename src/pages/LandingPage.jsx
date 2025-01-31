@@ -5,12 +5,19 @@ import SubwaySign from '../components/SubwaySign'
 import PropTypes from 'prop-types'
 
 const Container = styled.div`
+  width: 100%;
   height: 100vh;
-  width: 100vw;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   position: relative;
+  padding: 1rem;
+  
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+    padding-top: 20vh; // This will position it 20% from the top on mobile
+  }
 `
 
 const TitleContainer = styled.div`
