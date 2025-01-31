@@ -1,9 +1,14 @@
 import { createGlobalStyle } from 'styled-components'
-import Layout from './components/Layout'
 import LandingPage from './pages/LandingPage'
-import { useState } from 'react'
+import Home from './pages/Home'
+import PhotoPage from './pages/PhotoPage'
+import VideoPage from './pages/VideoPage'
+import AboutPage from './pages/AboutPage'
+import Header from './components/Header'
+import { useState, useEffect } from 'react'
 import { useTransition, animated } from '@react-spring/web'
 import styled from 'styled-components'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -13,69 +18,102 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    background: #1A1A1A;
+    color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background: white;  /* Dark blue background */
-    color: #08014d;
-    overflow: hidden;
   }
+`
 
-  /* Remove all focus outlines */
-  :focus {
-    outline: none;
-  }
-  
-  /* Remove focus ring for buttons and add custom focus styles if needed */
-  button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
+const Layout = styled.div`
+  padding-top: 64px; // Height of header
+`
 
-    &:focus {
-      outline: none;
-    }
-    
-    &:focus-visible {
-      outline: none;
-    }
-  }
+const HeaderArea = styled.header`
+  height: 64px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #1A1A1A;
+`
+
+const ContentArea = styled.main`
+  width: 100%;
 `
 
 const AnimatedContainer = styled(animated.div)`
-  position: absolute;
-  inset: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 200;
 `
 
-function App() {
+function AppContent() {
   const [isUnlocked, setIsUnlocked] = useState(false)
+  const [isReady, setIsReady] = useState(false)
+  const location = useLocation()
+  const isHomePage = location.pathname === '/'
 
-  const transitions = useTransition(isUnlocked, {
+  const transitions = useTransition(!isUnlocked && isHomePage ? true : null, {
     from: { opacity: 1 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
     config: {
-      duration: 600,  // Match the MetroCard swipe duration
-      easing: t => t  // Linear fade
+      duration: 800,
+      easing: t => t * (2 - t)
+    },
+    onRest: () => {
+      if (isUnlocked || !isHomePage) {
+        setIsReady(true)
+      }
     }
   })
 
+  useEffect(() => {
+    if (!isHomePage) {
+      setIsUnlocked(true)
+      setIsReady(true)
+    }
+  }, [isHomePage])
+
   return (
-    <>
-      <GlobalStyle />
-      {transitions((style, unlocked) => (
-        <AnimatedContainer style={style}>
-          {unlocked ? (
-            <Layout>
-              {/* Your main content will go here */}
-            </Layout>
-          ) : (
+    <Layout>
+      {isReady && (
+        <HeaderArea>
+          <Header />
+        </HeaderArea>
+      )}
+      <ContentArea>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/photo" element={<PhotoPage />} />
+          <Route path="/video" element={<VideoPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </ContentArea>
+      {transitions((style, item) =>
+        item && (
+          <AnimatedContainer style={style}>
             <LandingPage onUnlock={() => setIsUnlocked(true)} />
-          )}
-        </AnimatedContainer>
-      ))}
-    </>
+          </AnimatedContainer>
+        )
+      )}
+    </Layout>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <GlobalStyle />
+      <AppContent />
+    </BrowserRouter>
   )
 }
 

@@ -74,16 +74,11 @@ const SubwayLine = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: ${props => props.color === '#FCCC0A' ? '#000' : 'white'};
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: 1.3rem;
   background-color: ${props => props.color};
-  box-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.2),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
-    inset 0 2px 4px rgba(255, 255, 255, 0.2);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 
   @media (min-width: 768px) {
     width: 52px;
@@ -95,12 +90,13 @@ const SubwayLine = styled.div`
 export default function SubwaySign() {
     return (
         <SignContainer>
-            <StationText>metro tapes</StationText>
+            <StationText>metrotapes</StationText>
             <SubwayLines>
-                <SubwayLine color="#0039A6">A</SubwayLine>
-                <SubwayLine color="#0039A6">C</SubwayLine>
-                <SubwayLine color="#FF6319">F</SubwayLine>
+                <SubwayLine color="#EE352E">1</SubwayLine>
+                <SubwayLine color="#00933C">4</SubwayLine>
+                <SubwayLine color="#00933C">5</SubwayLine>
                 <SubwayLine color="#FCCC0A">R</SubwayLine>
+                <SubwayLine color="#FCCC0A">W</SubwayLine>
             </SubwayLines>
         </SignContainer>
     )

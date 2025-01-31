@@ -1,4 +1,5 @@
 import { createClient } from '@sanity/client'
+import imageUrlBuilder from '@sanity/image-url'
 
 const config = {
   projectId: 'l3itmzli',
@@ -11,8 +12,11 @@ const config = {
 // Create a client for fetching data (read-only)
 export const client = createClient(config)
 
-// Helper function to build image/file URLs
+// Create an image URL builder
+const builder = imageUrlBuilder(client)
+
+// Helper function to build image URLs
 export const urlFor = (source) => {
-  if (!source?.asset?.url) return null
-  return source.asset.url
+  if (!source?.asset) return ''
+  return builder.image(source)
 } 

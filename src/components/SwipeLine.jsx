@@ -6,7 +6,7 @@ const LineContainer = styled.div`
   pointer-events: none;
 
   @media (min-width: 768px) {
-    height: 16.5rem;
+    height: 17.5rem;
   }
 `
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import SwipeSection from '../components/SwipeSection'
-import SubwaySign from '../components/SubwaySign'
 import BackgroundVideo from '../components/BackgroundVideo'
+import SubwaySign from '../components/SubwaySign'
 import PropTypes from 'prop-types'
 
 const Container = styled.div`

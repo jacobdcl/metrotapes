@@ -5,19 +5,19 @@ import { useState } from 'react'
 
 const floatX = keyframes`
   0% { transform: translateX(0px); }
-  50% { transform: translateX(-8px); }
+  50% { transform: translateX(-14px); }
   100% { transform: translateX(0px); }
 `
 
 const floatY = keyframes`
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-14px); }
   100% { transform: translateY(0px); }
 `
 
 const tilt = keyframes`
   0% { transform: rotate(0deg); }
-  50% { transform: rotate(-1deg); }
+  50% { transform: rotate(-3deg); }
   100% { transform: rotate(0deg); }
 `
 
