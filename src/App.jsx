@@ -17,11 +17,23 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html, body, #root {
+    min-height: 100%;
+    height: 100%;
+  }
+
   body {
     background: #1A1A1A;
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    background: #1A1A1A;
   }
 `
 
@@ -42,6 +54,8 @@ const AnimatedHeaderArea = styled(animated.header)`
 
 const ContentArea = styled.main`
   width: 100%;
+  min-height: 100vh;
+  background: #1A1A1A;
 `
 
 const AnimatedContainer = styled(animated.div)`
