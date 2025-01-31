@@ -17,19 +17,19 @@ const Container = styled.div`
 const Content = styled.div`
   background: rgba(0, 0, 0, 0.3);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 
-    0 4px 6px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2);
   padding: 2rem;
 `
 
 const Title = styled.h1`
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 2rem;
   margin-bottom: 1.5rem;
   color: white;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.02em;
 
   @media (min-width: 768px) {
     font-size: 2.5rem;
@@ -76,10 +76,11 @@ const LandscapePhotoContainer = styled.div`
 
 const Description = styled.div`
   flex: 1;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1.1rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
+  letter-spacing: -0.02em;
 
   p {
     margin-bottom: 1rem;
@@ -109,8 +110,9 @@ const InstagramLink = styled.a`
   gap: 0.75rem;
   color: white;
   text-decoration: none;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1.1rem;
+  letter-spacing: -0.02em;
   transition: transform 0.2s ease;
   margin: 2rem 0;
   opacity: 0.9;
@@ -170,18 +172,18 @@ export default function AboutPage() {
                     </PhotoContainer>
                     <Description>
                         <PortableText value={aboutContent.description} />
+                        {aboutContent.instagramUrl && (
+                            <InstagramLink
+                                href={aboutContent.instagramUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <InstagramIcon />
+                                @metrotapes
+                            </InstagramLink>
+                        )}
                     </Description>
                 </TopSection>
-                {aboutContent.instagramUrl && (
-                    <InstagramLink
-                        href={aboutContent.instagramUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <InstagramIcon />
-                        @metrotapes
-                    </InstagramLink>
-                )}
                 <LandscapePhotoContainer>
                     <img
                         src={urlFor(aboutContent.photo1).width(1200).url()}
