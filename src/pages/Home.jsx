@@ -5,6 +5,7 @@ import ImageModal from '../components/ImageModal'
 
 const Container = styled.div`
   padding: 2rem;
+  color: white;
   max-width: 800px;
   margin: 0 auto;
 
@@ -14,7 +15,14 @@ const Container = styled.div`
 `
 
 const Article = styled.article`
-  margin-bottom: 4rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 2rem 2rem 2rem;
+  margin-bottom: 2rem;
   
   &:last-child {
     margin-bottom: 0;
@@ -49,7 +57,6 @@ const MediaSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top: 1rem;
   width: 100%;
 `
 
@@ -57,8 +64,9 @@ const ImageWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 75%;
+  padding-bottom: 56.25%;
   overflow: hidden;
+  border-radius: 8px;
 `
 
 const StyledImage = styled.img`
@@ -68,8 +76,6 @@ const StyledImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 4px;
-  cursor: pointer;
   transition: opacity 0.2s ease;
 
   &:hover {
@@ -82,7 +88,7 @@ const VideoWrapper = styled.div`
   width: 100%;
   padding-bottom: 56.25%; // 16:9 aspect ratio
   background: #000;
-  border-radius: 4px;
+  border-radius: 8px;
   overflow: hidden;
 `
 
@@ -98,8 +104,13 @@ const VideoIframe = styled.iframe`
 const Link = styled.a`
   color: #0039A6;
   text-decoration: none;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  transition: all 0.2s ease;
   
   &:hover {
+    background: rgba(255, 255, 255, 0.15);
     text-decoration: underline;
   }
 `

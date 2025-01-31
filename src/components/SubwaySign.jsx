@@ -92,11 +92,8 @@ export default function SubwaySign() {
         <SignContainer>
             <StationText>metrotapes</StationText>
             <SubwayLines>
-                <SubwayLine color="#EE352E">1</SubwayLine>
-                <SubwayLine color="#00933C">4</SubwayLine>
-                <SubwayLine color="#00933C">5</SubwayLine>
                 <SubwayLine color="#FCCC0A">R</SubwayLine>
-                <SubwayLine color="#FCCC0A">W</SubwayLine>
+                <SubwayLine color="#FF6319">F</SubwayLine>
             </SubwayLines>
         </SignContainer>
     )
