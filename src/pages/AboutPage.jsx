@@ -107,25 +107,23 @@ const Description = styled.div`
 const InstagramLink = styled.a`
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  gap: 0.75rem;
   color: white;
   text-decoration: none;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 1.1rem;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
   margin: 2rem 0;
+  opacity: 0.9;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
+    opacity: 1;
   }
 
   svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     fill: currentColor;
   }
 `
@@ -182,7 +180,7 @@ export default function AboutPage() {
                         rel="noopener noreferrer"
                     >
                         <InstagramIcon />
-                        Follow on Instagram
+                        @metrotapes
                     </InstagramLink>
                 )}
                 <LandscapePhotoContainer>
