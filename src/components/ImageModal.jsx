@@ -149,6 +149,11 @@ export default function ImageModal({ isOpen, onClose, currentImage, mediaItems }
         }
     }
 
+    const handleCloseClick = (e) => {
+        e.stopPropagation()
+        onClose()
+    }
+
     if (!currentImage || !mediaItems) return null
 
     const imageUrl = urlFor(currentImage).width(1200).url()
@@ -156,7 +161,7 @@ export default function ImageModal({ isOpen, onClose, currentImage, mediaItems }
     return (
         <Overlay $isOpen={isOpen} onClick={handleOverlayClick}>
             <ModalContent>
-                <CloseButton onClick={onClose}>
+                <CloseButton onClick={handleCloseClick}>
                     <FontAwesomeIcon icon={faTimes} />
                 </CloseButton>
                 <NavButton $direction="prev" onClick={handlePrevious}>

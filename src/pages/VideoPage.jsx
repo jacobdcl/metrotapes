@@ -46,15 +46,6 @@ const VideoItem = styled.div`
   }
 `
 
-const VideoTitle = styled.h2`
-  margin: 0;
-  padding: 16px;
-  font-size: 1.1rem;
-  color: white;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  opacity: 0.9;
-`
-
 const VideoEmbed = styled.div`
   position: relative;
   padding-top: 56.25%; // 16:9 aspect ratio
@@ -115,7 +106,6 @@ export default function VideoPage() {
                                 allowFullScreen
                             />
                         </VideoEmbed>
-                        <VideoTitle>{video.title}</VideoTitle>
                     </VideoItem>
                 ))}
             </VideoGrid>

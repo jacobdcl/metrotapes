@@ -29,7 +29,7 @@ const Layout = styled.div`
   padding-top: 64px; // Height of header
 `
 
-const HeaderArea = styled.header`
+const AnimatedHeaderArea = styled(animated.header)`
   height: 64px;
   position: fixed;
   top: 0;
@@ -37,6 +37,7 @@ const HeaderArea = styled.header`
   right: 0;
   z-index: 100;
   background: #1A1A1A;
+  transform-origin: top;
 `
 
 const ContentArea = styled.main`
@@ -55,7 +56,6 @@ const AnimatedContainer = styled(animated.div)`
 
 function AppContent() {
   const [isUnlocked, setIsUnlocked] = useState(false)
-  const [isReady, setIsReady] = useState(false)
   const location = useLocation()
   const isHomePage = location.pathname === '/'
 
@@ -66,27 +66,33 @@ function AppContent() {
     config: {
       duration: 800,
       easing: t => t * (2 - t)
-    },
-    onRest: () => {
-      if (isUnlocked || !isHomePage) {
-        setIsReady(true)
-      }
+    }
+  })
+
+  const headerTransition = useTransition(isUnlocked || !isHomePage, {
+    from: { opacity: 0, transform: 'translateY(-100%)' },
+    enter: { opacity: 1, transform: 'translateY(0%)' },
+    leave: { opacity: 0, transform: 'translateY(-100%)' },
+    config: {
+      duration: 800,
+      easing: t => t * (2 - t)
     }
   })
 
   useEffect(() => {
     if (!isHomePage) {
       setIsUnlocked(true)
-      setIsReady(true)
     }
   }, [isHomePage])
 
   return (
     <Layout>
-      {isReady && (
-        <HeaderArea>
-          <Header />
-        </HeaderArea>
+      {headerTransition((style, show) =>
+        show && (
+          <AnimatedHeaderArea style={style}>
+            <Header />
+          </AnimatedHeaderArea>
+        )
       )}
       <ContentArea>
         <Routes>
