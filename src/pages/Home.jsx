@@ -29,7 +29,6 @@ const Title = styled.h1`
   font-size: 2rem;
   margin-bottom: 1.5rem;
   color: white;
-  text-transform: uppercase;
   letter-spacing: 0.05em;
 
   @media (min-width: 768px) {
