@@ -18,10 +18,9 @@ const Content = styled.div`
 `
 
 const Title = styled.h1`
-  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 2rem;
   margin-bottom: 1.5rem;
-  color: #FCCC0A;
+  color: white;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 `
@@ -39,14 +38,10 @@ export default function AboutPage() {
             <Content>
                 <Title>About</Title>
                 <Text>
-                    Welcome to MetroTapes, where the rhythm of New York City's subway system meets the art of visual storytelling.
-                    As a photographer and videographer, I capture the pulse of the city through my lens, drawing inspiration from
-                    the iconic design and energy of the MTA.
+                    Hi Im ronnie.......
                 </Text>
                 <Text>
-                    My work explores the intersection of urban life, public transportation, and human connection. Each project
-                    is a journey through the city's arteries, documenting moments that might otherwise pass unnoticed in the
-                    daily rush.
+                    My work is .....
                 </Text>
             </Content>
         </Container>
