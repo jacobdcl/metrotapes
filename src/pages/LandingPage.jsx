@@ -35,19 +35,19 @@ const TitleContainer = styled.div`
 `
 
 export default function LandingPage({ onUnlock }) {
-    return (
-        <>
-            <BackgroundVideo />
-            <Container>
-                <TitleContainer>
-                    <SubwaySign />
-                </TitleContainer>
-                <SwipeSection onSwipeComplete={onUnlock} />
-            </Container>
-        </>
-    )
+  return (
+    <>
+      <BackgroundVideo />
+      <Container>
+        <TitleContainer>
+          <SubwaySign />
+        </TitleContainer>
+        <SwipeSection onSwipeComplete={onUnlock} />
+      </Container>
+    </>
+  )
 }
 
 LandingPage.propTypes = {
-    onUnlock: PropTypes.func.isRequired,
+  onUnlock: PropTypes.func.isRequired,
 } 

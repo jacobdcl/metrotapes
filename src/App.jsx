@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { useTransition, animated } from '@react-spring/web'
 import styled from 'styled-components'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import Blog from './pages/Blog'
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -27,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
     color: white;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 500;
-    min-height: 100vh;
+    min-height: 90vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.02em;
@@ -69,7 +70,7 @@ const AnimatedHeaderArea = styled(animated.header)`
 
 const ContentArea = styled.main`
   width: 100%;
-  min-height: 100vh;
+  min-height: 90vh;
   background: #1A1A1A;
 `
 
@@ -129,6 +130,7 @@ function AppContent() {
           <Route path="/photo" element={<PhotoPage />} />
           <Route path="/video" element={<VideoPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </ContentArea>

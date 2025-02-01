@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCamera, faVideo, faBook, faChevronDown, faRotateLeft } from '@fortawesome/free-solid-svg-icons'
+import { faCamera, faVideo, faBook, faChevronDown, faRotateLeft, faNewspaper } from '@fortawesome/free-solid-svg-icons'
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -72,30 +72,37 @@ const ResetButton = styled.button`
   position: absolute;
   transition: all 0.2s ease;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  right: ${props => props.$isHomePage ? '1rem' : 'auto'};
+  left: ${props => props.$isHomePage ? 'auto' : '50%'};
+  transform: ${props => props.$isHomePage ? 'none' : 'translateX(-50%)'};
 
   @media (min-width: 768px) {
     width: 52px;
     height: 52px;
-    left: 50%;
-    transform: translateX(-50%);
 
     &:hover {
-      transform: translateX(-50%) translateY(-2px);
+      transform: ${props => props.$isHomePage
+    ? 'translateY(-2px)'
+    : 'translateX(-50%) translateY(-2px)'};
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
                brightness(1.1);
     }
 
     &:active {
-      transform: translateX(-50%) translateY(0);
+      transform: ${props => props.$isHomePage
+    ? 'translateY(0)'
+    : 'translateX(-50%) translateY(0)'};
       filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))
                brightness(0.95);
     }
   }
 
   @media (max-width: 767px) {
-    right: 1rem;
     width: 42px;
     height: 42px;
+    right: 1rem;
+    left: auto;
+    transform: none;
 
     &:hover {
       transform: translateY(-2px);
@@ -242,96 +249,108 @@ const TitleGroup = styled.div`
 `
 
 export default function Header() {
-    const [isOpen, setIsOpen] = useState(false)
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
-    const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const isHomePage = location.pathname === '/'
 
-    useEffect(() => {
-        const handleResize = () => {
-            const mobile = window.innerWidth < 768
-            setIsMobile(mobile)
-            if (!mobile) {
-                setIsOpen(false)
-            }
-        }
-
-        window.addEventListener('resize', handleResize)
-        return () => window.removeEventListener('resize', handleResize)
-    }, [])
-
-    const handleTitleClick = (e) => {
-        e.preventDefault()
-        if (isMobile) {
-            if (isOpen) {
-                navigate('/')
-            }
-            setIsOpen(!isOpen)
-        } else {
-            navigate('/')
-        }
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      if (!mobile) {
+        setIsOpen(false)
+      }
     }
 
-    const handleNavClick = () => {
-        if (isMobile) {
-            setIsOpen(false)
-        }
-    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
-    const handleReset = () => {
+  const handleTitleClick = (e) => {
+    e.preventDefault()
+    if (isMobile && !isHomePage) {
+      if (isOpen) {
+        setIsOpen(false)
         navigate('/')
-        window.location.reload()
+      } else {
+        setIsOpen(true)
+      }
+    } else if (!isHomePage) {
+      navigate('/')
     }
+  }
 
-    const renderNavItems = () => (
-        <>
-            <NavItem to="/photo" onClick={handleNavClick}>
-                <Circle color="#0039A6">
-                    <FontAwesomeIcon icon={faCamera} />
-                </Circle>
-                <NavText>photo</NavText>
-            </NavItem>
-            <NavItem to="/video" onClick={handleNavClick}>
-                <Circle color="#00933C">
-                    <FontAwesomeIcon icon={faVideo} />
-                </Circle>
-                <NavText>video</NavText>
-            </NavItem>
-            <NavItem to="/about" onClick={handleNavClick}>
-                <Circle color="#996633">
-                    <FontAwesomeIcon icon={faBook} />
-                </Circle>
-                <NavText>about</NavText>
-            </NavItem>
-        </>
-    )
+  const handleNavClick = () => {
+    if (isMobile) {
+      setIsOpen(false)
+    }
+  }
 
-    return (
-        <HeaderContainer>
-            <HeaderContent>
-                <TopSection>
-                    <TitleWrapper onClick={handleTitleClick}>
-                        <TitleGroup>
-                            <Title>metrotapes</Title>
-                            <MenuIndicator $isOpen={isOpen}>
-                                <FontAwesomeIcon icon={faChevronDown} size="sm" />
-                            </MenuIndicator>
-                        </TitleGroup>
-                    </TitleWrapper>
-                    <ResetButton onClick={handleReset}>
-                        <FontAwesomeIcon icon={faRotateLeft} />
-                    </ResetButton>
-                    {!isMobile && (
-                        <NavList $isOpen={isOpen}>
-                            {renderNavItems()}
-                        </NavList>
-                    )}
-                </TopSection>
-                {isMobile && (
-                    <NavList $isOpen={isOpen}>
-                        {renderNavItems()}
-                    </NavList>
-                )}
-            </HeaderContent>
-        </HeaderContainer>
-    )
+  const handleReset = () => {
+    navigate('/')
+    window.location.reload()
+  }
+
+  const renderNavItems = () => (
+    <>
+      <NavItem to="/photo" onClick={handleNavClick}>
+        <Circle color="#0039A6">
+          <FontAwesomeIcon icon={faCamera} />
+        </Circle>
+        <NavText>photo</NavText>
+      </NavItem>
+      <NavItem to="/video" onClick={handleNavClick}>
+        <Circle color="#00933C">
+          <FontAwesomeIcon icon={faVideo} />
+        </Circle>
+        <NavText>video</NavText>
+      </NavItem>
+      <NavItem to="/blog" onClick={handleNavClick}>
+        <Circle color="#FF6319">
+          <FontAwesomeIcon icon={faNewspaper} />
+        </Circle>
+        <NavText>blog</NavText>
+      </NavItem>
+      <NavItem to="/about" onClick={handleNavClick}>
+        <Circle color="#996633">
+          <FontAwesomeIcon icon={faBook} />
+        </Circle>
+        <NavText>about</NavText>
+      </NavItem>
+    </>
+  )
+
+  return (
+    <HeaderContainer>
+      <HeaderContent>
+        <TopSection>
+          <TitleWrapper onClick={handleTitleClick}>
+            <TitleGroup>
+              <Title>metrotapes</Title>
+              {!isHomePage && isMobile && (
+                <MenuIndicator $isOpen={isOpen}>
+                  <FontAwesomeIcon icon={faChevronDown} size="sm" />
+                </MenuIndicator>
+              )}
+            </TitleGroup>
+          </TitleWrapper>
+          <ResetButton onClick={handleReset} $isHomePage={isHomePage}>
+            <FontAwesomeIcon icon={faRotateLeft} />
+          </ResetButton>
+          {!isHomePage && !isMobile && (
+            <NavList $isOpen={isOpen}>
+              {renderNavItems()}
+            </NavList>
+          )}
+        </TopSection>
+        {!isHomePage && isMobile && (
+          <NavList $isOpen={isOpen}>
+            {renderNavItems()}
+          </NavList>
+        )}
+      </HeaderContent>
+    </HeaderContainer>
+  )
 } 
