@@ -63,57 +63,65 @@ const Card = styled.img`
 `
 
 export default function MetroCard({ onSwipeComplete }) {
-    const [isDragging, setIsDragging] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
 
-    const [{ x }, api] = useSpring(() => ({
-        x: 0,
-        config: { tension: 300, friction: 30 }
-    }))
+  const [{ x }, api] = useSpring(() => ({
+    x: 0,
+    config: { tension: 300, friction: 30 }
+  }))
 
-    const handleClick = () => {
-        // Trigger the transition immediately
-        onSwipeComplete?.()
+  const handleClick = () => {
+    if (isAnimating) return
+    setIsAnimating(true)
 
-        // Then start the swipe animation
-        api.start({
-            x: window.innerWidth + 200,
-            config: {
-                duration: 600,
-                easing: t => t * (2 - t)
-            }
-        })
-    }
+    // Trigger the transition immediately
+    onSwipeComplete?.()
 
-    const bind = useDrag(({ active, movement: [mx], cancel }) => {
-        setIsDragging(active)
-
-        if (active && mx > window.innerWidth / 4) {
-            cancel()
-            handleClick()
-        } else {
-            api.start({ x: active ? mx : 0, immediate: active })
-        }
+    // Then start the swipe animation
+    api.start({
+      x: window.innerWidth + 200,
+      config: {
+        duration: 600,
+        easing: t => t * (2 - t)
+      },
+      onRest: () => {
+        api.start({ x: 0, immediate: true })
+        setIsAnimating(false)
+      }
     })
+  }
 
-    return (
-        <CardContainer
-            {...bind()}
-            onClick={handleClick}
-            style={{ x }}
-        >
-            <Card
-                src="/metrocard.png"
-                alt="Metro Card"
-                draggable="false"
-                style={{
-                    transform: isDragging ? 'rotate(2deg)' : 'none',
-                    transition: 'transform 0.2s'
-                }}
-            />
-        </CardContainer>
-    )
+  const bind = useDrag(({ active, movement: [mx], cancel }) => {
+    setIsDragging(active)
+
+    if (active && mx > window.innerWidth * 0.75) {
+      cancel()
+      handleClick()
+    } else {
+      api.start({ x: active ? mx : 0, immediate: active })
+    }
+  })
+
+  return (
+    <CardContainer
+      {...bind()}
+      onClick={handleClick}
+      style={{ x }}
+    >
+      <Card
+        src="/metrocard.png"
+        alt="Metro Card"
+        draggable="false"
+        style={{
+          transform: isDragging ? 'rotate(2deg)' : 'none',
+          transition: 'transform 0.2s'
+        }}
+      />
+    </CardContainer>
+  )
 }
 
 MetroCard.propTypes = {
-    onSwipeComplete: PropTypes.func.isRequired,
+  onSwipeComplete: PropTypes.func.isRequired,
 } 

@@ -131,16 +131,16 @@ const SubwayLine = styled.div`
 `
 
 export default function SubwaySign() {
-    return (
-        <SignContainer>
-            <WhiteLine />
-            <ContentWrapper>
-                <StationText>metrotapes</StationText>
-                <SubwayLines>
-                    <SubwayLine color="#FCCC0A">R</SubwayLine>
-                    <SubwayLine color="#FF6319">F</SubwayLine>
-                </SubwayLines>
-            </ContentWrapper>
-        </SignContainer>
-    )
+  return (
+    <SignContainer>
+      <WhiteLine />
+      <ContentWrapper>
+        <StationText>metrotapes</StationText>
+        <SubwayLines>
+          <SubwayLine color="#FCCC0A">R</SubwayLine>
+          <SubwayLine color="#FF6319">F</SubwayLine>
+        </SubwayLines>
+      </ContentWrapper>
+    </SignContainer>
+  )
 }

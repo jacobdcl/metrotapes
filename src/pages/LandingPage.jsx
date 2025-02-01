@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import SwipeSection from '../components/SwipeSection'
-import BackgroundVideo from '../components/BackgroundVideo'
 import SubwaySign from '../components/SubwaySign'
 import PropTypes from 'prop-types'
+import SubwayBubbles from '../components/SubwayBubbles'
 
 const Container = styled.div`
   width: 100%;
@@ -16,7 +16,7 @@ const Container = styled.div`
   
   @media (max-width: 768px) {
     justify-content: flex-start;
-    padding-top: 20vh; // This will position it 20% from the top on mobile
+    padding-top: 20vh;
   }
 `
 
@@ -37,7 +37,7 @@ const TitleContainer = styled.div`
 export default function LandingPage({ onUnlock }) {
   return (
     <>
-      <BackgroundVideo />
+      <SubwayBubbles />
       <Container>
         <TitleContainer>
           <SubwaySign />

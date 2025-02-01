@@ -82,6 +82,7 @@ const AnimatedContainer = styled(animated.div)`
   bottom: 0;
   width: 100%;
   z-index: 200;
+  background: #1A1A1A;
 `
 
 function AppContent() {

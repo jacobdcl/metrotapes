@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import SubwayBubbles from '../components/SubwayBubbles'
 
 const Container = styled.div`
   padding: 2rem;
@@ -10,23 +11,29 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 `
 
-const Machine = styled.div`
+export const Machine = styled.div`
   width: 90%;
   max-width: min(800px, 95vh);
   aspect-ratio: 4/3;
-  background: linear-gradient(180deg, #8B8B8B 0%, #666 100%);
+  background: linear-gradient(180deg, #9B9B9B 0%, #666 100%);
   border-radius: 8px;
   padding: 16px;
   box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.4),
-    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 10px 20px rgba(0, 0, 0, 0.4),
+    0 5px 10px rgba(0, 0, 0, 0.3),
+    inset 0 2px 2px rgba(255, 255, 255, 0.2);
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 16px;
   position: relative;
-  border: 2px solid #666;
+  border: 2px solid #555;
+  transform: perspective(1000px) rotateX(2deg);
+  transform-origin: center bottom;
 
   @media (max-width: 480px) {
     padding: 12px;
@@ -40,11 +47,24 @@ const Machine = styled.div`
     border-radius: 4px;
     background: linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.15) 0%,
       transparent 50%,
-      rgba(0, 0, 0, 0.1) 100%
+      rgba(0, 0, 0, 0.2) 100%
     );
     pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    filter: blur(4px);
+    border-radius: 50%;
+    z-index: -1;
   }
 `
 
@@ -86,10 +106,13 @@ const MainSection = styled.div`
   flex-direction: column;
   gap: 16px;
   height: 100%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
   padding: 12px;
   border-radius: 6px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.3);
 
   @media (max-width: 480px) {
     gap: 12px;
@@ -201,36 +224,39 @@ const NavButton = styled(Link)`
 
 export default function Home() {
   return (
-    <Container>
-      <Machine>
-        <TopBar />
-        <MainSection>
-          <Screen>
-            <VideoContainer>
-              <Video
-                src="https://www.youtube.com/embed/trA9owC00HI?autoplay=1&mute=1&controls=0&loop=1&playlist=trA9owC00HI&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
-                title="Background Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </VideoContainer>
-          </Screen>
-          <ButtonSection>
-            <NavButton to="/photo" color="#0039A6">
-              photo
-            </NavButton>
-            <NavButton to="/video" color="#00933C">
-              video
-            </NavButton>
-            <NavButton to="/blog" color="#FF6319">
-              blog
-            </NavButton>
-            <NavButton to="/about" color="#996633">
-              about
-            </NavButton>
-          </ButtonSection>
-        </MainSection>
-      </Machine>
-    </Container>
+    <>
+      <SubwayBubbles />
+      <Container>
+        <Machine>
+          <TopBar />
+          <MainSection>
+            <Screen>
+              <VideoContainer>
+                <Video
+                  src="https://www.youtube.com/embed/trA9owC00HI?autoplay=1&mute=1&controls=0&loop=1&playlist=trA9owC00HI&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
+                  title="Background Video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </VideoContainer>
+            </Screen>
+            <ButtonSection>
+              <NavButton to="/photo" color="#0039A6">
+                photo
+              </NavButton>
+              <NavButton to="/video" color="#00933C">
+                video
+              </NavButton>
+              <NavButton to="/blog" color="#FF6319">
+                blog
+              </NavButton>
+              <NavButton to="/about" color="#996633">
+                about
+              </NavButton>
+            </ButtonSection>
+          </MainSection>
+        </Machine>
+      </Container>
+    </>
   )
 }

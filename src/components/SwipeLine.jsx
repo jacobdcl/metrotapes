@@ -68,9 +68,9 @@ const Line = styled.div`
 `
 
 export default function SwipeLine() {
-    return (
-        <LineContainer>
-            <Line />
-        </LineContainer>
-    )
+  return (
+    <LineContainer>
+      <Line />
+    </LineContainer>
+  )
 } 
