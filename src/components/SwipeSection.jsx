@@ -21,7 +21,7 @@ const SwipeContainer = styled.div`
 const CardWrapper = styled.div`
   position: absolute;
   left: -10px;
-  bottom: 3rem; // Higher position for mobile
+  bottom: 5rem; // Higher position for mobile
   z-index: 2;
   pointer-events: auto;
   transform: scale(0.85); // Slightly smaller on mobile
@@ -35,16 +35,16 @@ const CardWrapper = styled.div`
 `
 
 SwipeSection.propTypes = {
-    onSwipeComplete: PropTypes.func.isRequired,
+  onSwipeComplete: PropTypes.func.isRequired,
 }
 
 export default function SwipeSection({ onSwipeComplete }) {
-    return (
-        <SwipeContainer>
-            <CardWrapper>
-                <MetroCard onSwipeComplete={onSwipeComplete} />
-            </CardWrapper>
-            <SwipeLine />
-        </SwipeContainer>
-    )
+  return (
+    <SwipeContainer>
+      <CardWrapper>
+        <MetroCard onSwipeComplete={onSwipeComplete} />
+      </CardWrapper>
+      <SwipeLine />
+    </SwipeContainer>
+  )
 } 

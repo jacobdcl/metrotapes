@@ -63,52 +63,52 @@ const VideoIframe = styled.iframe`
 `
 
 export default function VideoPage() {
-    const [videos, setVideos] = useState([])
-    const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
+  const [videos, setVideos] = useState([])
+  const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY
 
-    useEffect(() => {
-        const fetchVideos = async () => {
-            try {
-                const playlistId = await client.fetch(`*[_type == "videos"][0].playlistId`)
-                if (!playlistId) return
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const playlistId = await client.fetch(`*[_type == "videos"][0].playlistId`)
+        if (!playlistId) return
 
-                const response = await fetch(
-                    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${YOUTUBE_API_KEY}`
-                )
-                const data = await response.json()
+        const response = await fetch(
+          `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${YOUTUBE_API_KEY}`
+        )
+        const data = await response.json()
 
-                if (data.items) {
-                    const formattedVideos = data.items.map(item => ({
-                        id: item.id,
-                        title: item.snippet.title,
-                        videoId: item.snippet.resourceId.videoId
-                    }))
-                    setVideos(formattedVideos)
-                }
-            } catch (error) {
-                console.error('Error fetching videos:', error)
-            }
+        if (data.items) {
+          const formattedVideos = data.items.map(item => ({
+            id: item.id,
+            title: item.snippet.title,
+            videoId: item.snippet.resourceId.videoId
+          }))
+          setVideos(formattedVideos)
         }
+      } catch (error) {
+        console.error('Error fetching videos:', error)
+      }
+    }
 
-        fetchVideos()
-    }, [YOUTUBE_API_KEY])
+    fetchVideos()
+  }, [YOUTUBE_API_KEY])
 
-    return (
-        <Container>
-            <VideoGrid>
-                {videos.map(video => (
-                    <VideoItem key={video.id}>
-                        <VideoEmbed>
-                            <VideoIframe
-                                src={`https://www.youtube.com/embed/${video.videoId}`}
-                                title={video.title}
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                            />
-                        </VideoEmbed>
-                    </VideoItem>
-                ))}
-            </VideoGrid>
-        </Container>
-    )
+  return (
+    <Container>
+      <VideoGrid>
+        {videos.map(video => (
+          <VideoItem key={video.id}>
+            <VideoEmbed>
+              <VideoIframe
+                src={`https://www.youtube.com/embed/${video.videoId}`}
+                title={video.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </VideoEmbed>
+          </VideoItem>
+        ))}
+      </VideoGrid>
+    </Container>
+  )
 }

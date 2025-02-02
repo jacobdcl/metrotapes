@@ -22,13 +22,13 @@ const tilt = keyframes`
   100% { transform: rotate(0deg); }
 `
 
-const slide = keyframes`
-  0% { transform: translateX(0); }
-  10% { transform: translateX(0); }
-  45% { transform: translateX(40px); }
-  55% { transform: translateX(40px); }
-  90% { transform: translateX(0); }
-  100% { transform: translateX(0); }
+const bounce = keyframes`
+  0% { transform: translate(0, 0) scale(1); }
+  10% { transform: translate(0, 0) scale(1); }
+  45% { transform: translate(20px, -20px) scale(1.1); }
+  55% { transform: translate(20px, -20px) scale(1.1); }
+  90% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(0, 0) scale(1); }
 `
 
 const CardContainer = styled(animated.div)`
@@ -36,8 +36,9 @@ const CardContainer = styled(animated.div)`
   touch-action: none;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
   transition: filter 0.3s ease;
-  animation: ${slide} 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: ${bounce} 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   animation-delay: 1s;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5));
@@ -71,7 +72,7 @@ export default function MetroCard({ onSwipeComplete }) {
     config: { tension: 300, friction: 30 }
   }))
 
-  const handleClick = () => {
+  const triggerSwipe = () => {
     if (isAnimating) return
     setIsAnimating(true)
 
@@ -92,15 +93,25 @@ export default function MetroCard({ onSwipeComplete }) {
     })
   }
 
-  const bind = useDrag(({ active, movement: [mx], cancel }) => {
+  const handleClick = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    triggerSwipe()
+  }
+
+  const bind = useDrag(({ active, movement: [mx], cancel, event }) => {
+    event?.preventDefault()
     setIsDragging(active)
 
     if (active && mx > window.innerWidth * 0.75) {
       cancel()
-      handleClick()
+      triggerSwipe()
     } else {
       api.start({ x: active ? mx : 0, immediate: active })
     }
+  }, {
+    filterTaps: true,
+    preventDefault: true
   })
 
   return (
@@ -108,6 +119,13 @@ export default function MetroCard({ onSwipeComplete }) {
       {...bind()}
       onClick={handleClick}
       style={{ x }}
+      role="button"
+      tabIndex={0}
+      onKeyPress={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleClick(e)
+        }
+      }}
     >
       <Card
         src="/metrocard.png"

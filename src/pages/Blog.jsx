@@ -114,100 +114,100 @@ const InstagramEmbed = styled.div`
 `
 
 function extractYouTubeId(url) {
-    if (!url) return null
-    try {
-        const urlObj = new URL(url)
+  if (!url) return null
+  try {
+    const urlObj = new URL(url)
 
-        // Handle youtu.be format
-        if (urlObj.hostname === 'youtu.be') {
-            return urlObj.pathname.slice(1)
-        }
-
-        // Handle youtube.com format
-        if (urlObj.hostname === 'youtube.com' || urlObj.hostname === 'www.youtube.com') {
-            const searchParams = new URLSearchParams(urlObj.search)
-            return searchParams.get('v')
-        }
-
-        return null
-    } catch {
-        return null
+    // Handle youtu.be format
+    if (urlObj.hostname === 'youtu.be') {
+      return urlObj.pathname.slice(1)
     }
+
+    // Handle youtube.com format
+    if (urlObj.hostname === 'youtube.com' || urlObj.hostname === 'www.youtube.com') {
+      const searchParams = new URLSearchParams(urlObj.search)
+      return searchParams.get('v')
+    }
+
+    return null
+  } catch {
+    return null
+  }
 }
 
 function reloadInstagramEmbed() {
-    if (window.instgrm) {
-        window.instgrm.Embeds.process()
-    }
+  if (window.instgrm) {
+    window.instgrm.Embeds.process()
+  }
 }
 
 function getInstagramUrl(url) {
-    try {
-        const urlObj = new URL(url)
-        const postId = urlObj.pathname.split('/')[2]
-        return `https://www.instagram.com/p/${postId}/embed`
-    } catch {
-        return url
-    }
+  try {
+    const urlObj = new URL(url)
+    const postId = urlObj.pathname.split('/')[2]
+    return `https://www.instagram.com/p/${postId}/embed`
+  } catch {
+    return url
+  }
 }
 
 function renderMediaItem(item) {
-    let videoId;
-    let embedUrl;
+  let videoId;
+  let embedUrl;
 
-    switch (item.type) {
-        case 'image':
-            return (
-                <img
-                    src={urlFor(item.image).width(600).url()}
-                    alt={item.alt || 'Media item'}
-                />
-            )
-        case 'link':
-            return (
-                <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    {item.alt || 'Visit Link'}
-                </a>
-            )
-        case 'youtube':
-            videoId = extractYouTubeId(item.videoUrl)
-            if (!videoId) return null
-            return (
-                <iframe
-                    src={`https://www.youtube.com/embed/${videoId}`}
-                    title={item.alt || 'YouTube video'}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                />
-            )
-        case 'instagram':
-            embedUrl = getInstagramUrl(item.instagramPost)
-            return (
-                <InstagramEmbed>
-                    <iframe
-                        src={embedUrl}
-                        frameBorder="0"
-                        scrolling="no"
-                        allow="encrypted-media"
-                        style={{ background: 'transparent' }}
-                    />
-                </InstagramEmbed>
-            )
-        default:
-            return null
-    }
+  switch (item.type) {
+    case 'image':
+      return (
+        <img
+          src={urlFor(item.image).width(600).url()}
+          alt={item.alt || 'Media item'}
+        />
+      )
+    case 'link':
+      return (
+        <a
+          href={item.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {item.alt || 'Visit Link'}
+        </a>
+      )
+    case 'youtube':
+      videoId = extractYouTubeId(item.videoUrl)
+      if (!videoId) return null
+      return (
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}`}
+          title={item.alt || 'YouTube video'}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      )
+    case 'instagram':
+      embedUrl = getInstagramUrl(item.instagramPost)
+      return (
+        <InstagramEmbed>
+          <iframe
+            src={embedUrl}
+            frameBorder="0"
+            scrolling="no"
+            allow="encrypted-media"
+            style={{ background: 'transparent' }}
+          />
+        </InstagramEmbed>
+      )
+    default:
+      return null
+  }
 }
 
 export default function Blog() {
-    const [posts, setPosts] = useState([])
-    const postsRef = useRef([])
+  const [posts, setPosts] = useState([])
+  const postsRef = useRef([])
 
-    useEffect(() => {
-        const query = `*[_type == "post"] | order(publishedAt desc) {
+  useEffect(() => {
+    const query = `*[_type == "post"] | order(publishedAt desc) {
       title,
       description,
       publishedAt,
@@ -223,38 +223,38 @@ export default function Blog() {
       }
     }`
 
-        client.fetch(query)
-            .then(data => {
-                setPosts(data)
-                postsRef.current = data
-            })
-            .catch(console.error)
-    }, [])
+    client.fetch(query)
+      .then(data => {
+        setPosts(data)
+        postsRef.current = data
+      })
+      .catch(console.error)
+  }, [])
 
-    // Reload Instagram embeds when posts change
-    useEffect(() => {
-        if (posts.length > 0) {
-            reloadInstagramEmbed()
-        }
-    }, [posts])
+  // Reload Instagram embeds when posts change
+  useEffect(() => {
+    if (posts.length > 0) {
+      reloadInstagramEmbed()
+    }
+  }, [posts])
 
-    if (!posts.length) return null
+  if (!posts.length) return null
 
-    return (
-        <Container>
-            {posts.map((post, index) => (
-                <ArticleContainer key={index}>
-                    <ArticleTitle>{post.title}</ArticleTitle>
-                    <ArticleDescription>{post.description}</ArticleDescription>
-                    <MediaGrid>
-                        {post.media?.map((item, mediaIndex) => (
-                            <MediaItem key={mediaIndex}>
-                                {renderMediaItem(item)}
-                            </MediaItem>
-                        ))}
-                    </MediaGrid>
-                </ArticleContainer>
+  return (
+    <Container>
+      {posts.map((post, index) => (
+        <ArticleContainer key={index}>
+          <ArticleTitle>{post.title}</ArticleTitle>
+          <ArticleDescription>{post.description}</ArticleDescription>
+          <MediaGrid>
+            {post.media?.map((item, mediaIndex) => (
+              <MediaItem key={mediaIndex}>
+                {renderMediaItem(item)}
+              </MediaItem>
             ))}
-        </Container>
-    )
+          </MediaGrid>
+        </ArticleContainer>
+      ))}
+    </Container>
+  )
 } 

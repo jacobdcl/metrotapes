@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCamera, faVideo, faBook, faChevronDown, faRotateLeft, faNewspaper } from '@fortawesome/free-solid-svg-icons'
+import { faCamera, faVideo, faBook, faBars, faRotateLeft, faNewspaper } from '@fortawesome/free-solid-svg-icons'
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -230,20 +230,31 @@ const NavText = styled.span`
   }
 `
 
-const MenuIndicator = styled.div`
+const MenuButton = styled.button`
   display: none;
-  color: rgba(255, 255, 255, 0.6);
-  margin-left: 8px;
-  transform: rotate(${props => props.$isOpen ? '180deg' : '0deg'});
-  transition: transform 0.3s ease;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 8px;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: white;
+  }
 
   @media (max-width: 767px) {
-    display: inline-flex;
-    align-items: center;
+    display: ${props => props.$isHomePage ? 'none' : 'block'};
   }
 `
 
 const TitleGroup = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const TitleSection = styled.div`
   display: flex;
   align-items: center;
 `
@@ -270,16 +281,15 @@ export default function Header() {
 
   const handleTitleClick = (e) => {
     e.preventDefault()
-    if (isMobile && !isHomePage) {
-      if (isOpen) {
-        setIsOpen(false)
-        navigate('/')
-      } else {
-        setIsOpen(true)
-      }
-    } else if (!isHomePage) {
+    if (!isHomePage) {
       navigate('/')
     }
+  }
+
+  const handleMenuToggle = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsOpen(!isOpen)
   }
 
   const handleNavClick = () => {
@@ -326,16 +336,18 @@ export default function Header() {
     <HeaderContainer>
       <HeaderContent>
         <TopSection>
-          <TitleWrapper onClick={handleTitleClick}>
-            <TitleGroup>
-              <Title>metrotapes</Title>
-              {!isHomePage && isMobile && (
-                <MenuIndicator $isOpen={isOpen}>
-                  <FontAwesomeIcon icon={faChevronDown} size="sm" />
-                </MenuIndicator>
-              )}
-            </TitleGroup>
-          </TitleWrapper>
+          <TitleSection>
+            {!isHomePage && isMobile && (
+              <MenuButton onClick={handleMenuToggle} $isHomePage={isHomePage}>
+                <FontAwesomeIcon icon={faBars} size="lg" />
+              </MenuButton>
+            )}
+            <TitleWrapper onClick={handleTitleClick}>
+              <TitleGroup>
+                <Title>metrotapes</Title>
+              </TitleGroup>
+            </TitleWrapper>
+          </TitleSection>
           <ResetButton onClick={handleReset} $isHomePage={isHomePage}>
             <FontAwesomeIcon icon={faRotateLeft} />
           </ResetButton>
