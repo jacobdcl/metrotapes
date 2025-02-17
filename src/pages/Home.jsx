@@ -104,7 +104,7 @@ const TopBar = styled.div`
 const MainSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   height: 100%;
   background: rgba(0, 0, 0, 0.15);
   padding: 12px;
@@ -115,7 +115,7 @@ const MainSection = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.3);
 
   @media (max-width: 480px) {
-    gap: 12px;
+    gap: 6px;
     padding: 8px;
   }
 `
@@ -128,7 +128,7 @@ const Screen = styled.div`
   box-shadow: 
     inset 0 2px 4px rgba(0, 0, 0, 0.8),
     0 1px 0 rgba(255, 255, 255, 0.1);
-  border: 4px solid #FFD700;
+  border: 4px solid #444;
   aspect-ratio: 16/9;
   flex: 1;
 
@@ -163,31 +163,27 @@ const Video = styled.iframe`
 `
 
 const ButtonSection = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 6px;
-  box-shadow: 
-    inset 0 1px 3px rgba(0, 0, 0, 0.3),
-    0 1px 0 rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+  padding-top: 0.25rem;
 
   @media (max-width: 480px) {
-    gap: 6px;
-    padding: 8px;
+    gap: 0.375rem;
+    padding-top: 0.125rem;
   }
 `
 
 const NavButton = styled(Link)`
+  flex: 1;
+  min-width: 0;
   height: 52px;
   background: ${props => props.color};
-  border-radius: 0;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 16px;
   color: white;
   text-decoration: none;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -209,12 +205,19 @@ const NavButton = styled(Link)`
   &:hover {
     filter: brightness(1.1);
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   &:active {
     filter: brightness(0.9);
     transform: translateY(1px);
     color: white;
+    box-shadow: 
+      0 1px 2px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   &:visited {
@@ -233,7 +236,7 @@ export default function Home() {
             <Screen>
               <VideoContainer>
                 <Video
-                  src="https://www.youtube.com/embed/trA9owC00HI?autoplay=1&mute=1&controls=0&loop=1&playlist=trA9owC00HI&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
+                  src="https://www.youtube.com/embed/HVR-J4_80jU?autoplay=1&mute=1&controls=0&loop=1&playlist=HVR-J4_80jU&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
                   title="Background Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -246,9 +249,6 @@ export default function Home() {
               </NavButton>
               <NavButton to="/video" color="#00933C">
                 video
-              </NavButton>
-              <NavButton to="/blog" color="#FF6319">
-                blog
               </NavButton>
               <NavButton to="/about" color="#996633">
                 about

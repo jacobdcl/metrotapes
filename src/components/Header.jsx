@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCamera, faVideo, faBook, faBars, faRotateLeft, faNewspaper } from '@fortawesome/free-solid-svg-icons'
+import { faCamera, faVideo, faBook, faBars, faRotateLeft } from '@fortawesome/free-solid-svg-icons'
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -316,12 +316,6 @@ export default function Header() {
           <FontAwesomeIcon icon={faVideo} />
         </Circle>
         <NavText>video</NavText>
-      </NavItem>
-      <NavItem to="/blog" onClick={handleNavClick}>
-        <Circle color="#FF6319">
-          <FontAwesomeIcon icon={faNewspaper} />
-        </Circle>
-        <NavText>blog</NavText>
       </NavItem>
       <NavItem to="/about" onClick={handleNavClick}>
         <Circle color="#996633">

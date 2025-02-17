@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import MetroCard from './MetroCard'
 import SwipeLine from './SwipeLine'
 import PropTypes from 'prop-types'
+import { forwardRef } from 'react'
 
 const SwipeContainer = styled.div`
   position: absolute;
@@ -34,17 +35,21 @@ const CardWrapper = styled.div`
   }
 `
 
-SwipeSection.propTypes = {
-  onSwipeComplete: PropTypes.func.isRequired,
-}
-
-export default function SwipeSection({ onSwipeComplete }) {
+const SwipeSection = forwardRef(({ onSwipeComplete }, ref) => {
   return (
     <SwipeContainer>
       <CardWrapper>
-        <MetroCard onSwipeComplete={onSwipeComplete} />
+        <MetroCard onSwipeComplete={onSwipeComplete} ref={ref} className="metro-card" />
       </CardWrapper>
       <SwipeLine />
     </SwipeContainer>
   )
-} 
+})
+
+SwipeSection.propTypes = {
+  onSwipeComplete: PropTypes.func.isRequired,
+}
+
+SwipeSection.displayName = 'SwipeSection'
+
+export default SwipeSection 

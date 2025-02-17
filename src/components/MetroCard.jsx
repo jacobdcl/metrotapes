@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 import { useSpring, animated } from '@react-spring/web'
 import { useDrag } from '@use-gesture/react'
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
 const floatX = keyframes`
@@ -63,7 +63,7 @@ const Card = styled.img`
   }
 `
 
-export default function MetroCard({ onSwipeComplete }) {
+const MetroCard = forwardRef(({ onSwipeComplete }, ref) => {
   const [isDragging, setIsDragging] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
 
@@ -121,6 +121,7 @@ export default function MetroCard({ onSwipeComplete }) {
       style={{ x }}
       role="button"
       tabIndex={0}
+      ref={ref}
       onKeyPress={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           handleClick(e)
@@ -138,8 +139,12 @@ export default function MetroCard({ onSwipeComplete }) {
       />
     </CardContainer>
   )
-}
+})
 
 MetroCard.propTypes = {
   onSwipeComplete: PropTypes.func.isRequired,
-} 
+}
+
+MetroCard.displayName = 'MetroCard'
+
+export default MetroCard 
