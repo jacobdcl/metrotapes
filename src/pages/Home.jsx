@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import SubwayBubbles from '../components/SubwayBubbles'
+import BackgroundVideo from '../components/BackgroundVideo'
 
 const Container = styled.div`
   padding: 2rem;
@@ -13,6 +13,10 @@ const Container = styled.div`
   justify-content: center;
   position: relative;
   z-index: 1;
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `
 
 export const Machine = styled.div`
@@ -36,8 +40,11 @@ export const Machine = styled.div`
   transform-origin: center bottom;
 
   @media (max-width: 480px) {
+    width: 95%;
+    max-width: none;
     padding: 12px;
     gap: 12px;
+    margin-top: -10vh;
   }
 
   &::before {
@@ -228,7 +235,7 @@ const NavButton = styled(Link)`
 export default function Home() {
   return (
     <>
-      <SubwayBubbles />
+      <BackgroundVideo />
       <Container>
         <Machine>
           <TopBar />
@@ -236,8 +243,8 @@ export default function Home() {
             <Screen>
               <VideoContainer>
                 <Video
-                  src="https://www.youtube.com/embed/HVR-J4_80jU?autoplay=1&mute=1&controls=0&loop=1&playlist=HVR-J4_80jU&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
-                  title="Background Video"
+                  src="https://www.youtube.com/embed/trA9owC00HI?autoplay=1&mute=1&controls=0&loop=1&playlist=trA9owC00HI&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&start=8"
+                  title="Machine Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />

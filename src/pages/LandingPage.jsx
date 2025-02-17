@@ -46,12 +46,14 @@ export default function LandingPage({ onUnlock }) {
   const triggerSwipe = () => {
     if (metroCardRef.current) {
       setIsInitialLoad(false)
-      const swipeEvent = new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        view: window
-      })
-      metroCardRef.current.dispatchEvent(swipeEvent)
+      setTimeout(() => {
+        const swipeEvent = new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        })
+        metroCardRef.current?.dispatchEvent(swipeEvent)
+      }, 50)
     }
   }
 
@@ -63,15 +65,17 @@ export default function LandingPage({ onUnlock }) {
     if (!hasInteracted && isReady) {
       timeoutRef.current = setTimeout(() => {
         triggerSwipe()
-      }, 3000)
+      }, 2000)
     }
   }
 
   const handleUserInteraction = () => {
-    setHasInteracted(true)
-    setIsInitialLoad(false)
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
+    if (!hasInteracted) {
+      setHasInteracted(true)
+      setIsInitialLoad(false)
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
     }
   }
 

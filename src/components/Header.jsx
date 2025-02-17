@@ -18,7 +18,7 @@ const HeaderContent = styled.div`
   position: relative;
 
   @media (min-width: 768px) {
-    padding: 0.75rem 2rem;
+    padding: 0.75rem 1rem 0.75rem 2rem;
   }
 
   &::after {
@@ -72,7 +72,7 @@ const ResetButton = styled.button`
   position: absolute;
   transition: all 0.2s ease;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-  right: ${props => props.$isHomePage ? '1rem' : 'auto'};
+  right: ${props => props.$isHomePage ? '0' : 'auto'};
   left: ${props => props.$isHomePage ? 'auto' : '50%'};
   transform: ${props => props.$isHomePage ? 'none' : 'translateX(-50%)'};
 
@@ -100,7 +100,7 @@ const ResetButton = styled.button`
   @media (max-width: 767px) {
     width: 42px;
     height: 42px;
-    right: 1rem;
+    right: 0;
     left: auto;
     transform: none;
 

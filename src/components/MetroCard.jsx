@@ -4,24 +4,6 @@ import { useDrag } from '@use-gesture/react'
 import { useState, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
-const floatX = keyframes`
-  0% { transform: translateX(0px); }
-  50% { transform: translateX(-14px); }
-  100% { transform: translateX(0px); }
-`
-
-const floatY = keyframes`
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-14px); }
-  100% { transform: translateY(0px); }
-`
-
-const tilt = keyframes`
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(-5deg); }
-  100% { transform: rotate(0deg); }
-`
-
 const bounce = keyframes`
   0% { transform: translate(0, 0) scale(1); }
   10% { transform: translate(0, 0) scale(1); }
@@ -33,10 +15,10 @@ const bounce = keyframes`
 
 const slowSwipe = keyframes`
   0% { transform: translateX(0) rotate(0deg); }
-  20% { transform: translateX(-10px) rotate(-2deg); }
-  40% { transform: translateX(5px) rotate(1deg); }
-  60% { transform: translateX(-8px) rotate(-1.5deg); }
-  80% { transform: translateX(3px) rotate(0.5deg); }
+  20% { transform: translateX(-20px) rotate(-4deg); }
+  40% { transform: translateX(10px) rotate(2deg); }
+  60% { transform: translateX(-15px) rotate(-3deg); }
+  80% { transform: translateX(8px) rotate(1deg); }
   100% { transform: translateX(0) rotate(0deg); }
 `
 
@@ -45,7 +27,7 @@ const CardContainer = styled(animated.div)`
   touch-action: none;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
   transition: filter 0.3s ease;
-  animation: ${props => props.$isInitialLoad ? slowSwipe : bounce} ${props => props.$isInitialLoad ? '3s' : '3s'} cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: ${props => props.$isInitialLoad ? slowSwipe : bounce} 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   animation-delay: ${props => props.$isInitialLoad ? '0s' : '1s'};
   -webkit-tap-highlight-color: transparent;
 
