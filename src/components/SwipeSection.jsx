@@ -35,7 +35,7 @@ const CardWrapper = styled.div`
   }
 `
 
-const SwipeSection = forwardRef(({ onSwipeComplete, isInitialLoad }, ref) => {
+const SwipeSection = forwardRef(({ onSwipeComplete }, ref) => {
   return (
     <SwipeContainer>
       <CardWrapper>
@@ -43,7 +43,6 @@ const SwipeSection = forwardRef(({ onSwipeComplete, isInitialLoad }, ref) => {
           onSwipeComplete={onSwipeComplete}
           ref={ref}
           className="metro-card"
-          isInitialLoad={isInitialLoad}
         />
       </CardWrapper>
       <SwipeLine />
@@ -53,11 +52,6 @@ const SwipeSection = forwardRef(({ onSwipeComplete, isInitialLoad }, ref) => {
 
 SwipeSection.propTypes = {
   onSwipeComplete: PropTypes.func.isRequired,
-  isInitialLoad: PropTypes.bool,
-}
-
-SwipeSection.defaultProps = {
-  isInitialLoad: false,
 }
 
 SwipeSection.displayName = 'SwipeSection'

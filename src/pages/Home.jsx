@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import BackgroundVideo from '../components/BackgroundVideo'
+import SubwayBubbles from '../components/SubwayBubbles'
 
 const Container = styled.div`
   padding: 2rem;
@@ -167,6 +167,7 @@ const Video = styled.iframe`
   border: none;
   display: block;
   transform: scale(1.05);
+  background: #000;
 `
 
 const ButtonSection = styled.div`
@@ -235,7 +236,7 @@ const NavButton = styled(Link)`
 export default function Home() {
   return (
     <>
-      <BackgroundVideo />
+      <SubwayBubbles />
       <Container>
         <Machine>
           <TopBar />
@@ -243,10 +244,11 @@ export default function Home() {
             <Screen>
               <VideoContainer>
                 <Video
-                  src="https://www.youtube.com/embed/trA9owC00HI?autoplay=1&mute=1&controls=0&loop=1&playlist=trA9owC00HI&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&start=8"
+                  src="https://www.youtube.com/embed/trA9owC00HI?autoplay=1&mute=1&controls=0&loop=1&playlist=trA9owC00HI&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&start=8&enablejsapi=0&origin=metrotapes.com&widget_referrer=metrotapes.com&color=white&disablekb=1&fs=0&version=3&autohide=1"
                   title="Machine Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
+                  frameBorder="0"
                 />
               </VideoContainer>
             </Screen>

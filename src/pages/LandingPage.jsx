@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import SwipeSection from '../components/SwipeSection'
 import SubwaySign from '../components/SubwaySign'
 import PropTypes from 'prop-types'
-import SubwayBubbles from '../components/SubwayBubbles'
-import { useEffect, useRef, useState } from 'react'
+import BackgroundVideo from '../components/BackgroundVideo'
+import { useRef } from 'react'
 
 const Container = styled.div`
   width: 100%;
@@ -38,86 +38,15 @@ const TitleContainer = styled.div`
 
 export default function LandingPage({ onUnlock }) {
   const metroCardRef = useRef(null)
-  const timeoutRef = useRef(null)
-  const [hasInteracted, setHasInteracted] = useState(false)
-  const [isReady, setIsReady] = useState(false)
-  const [isInitialLoad, setIsInitialLoad] = useState(true)
-
-  const triggerSwipe = () => {
-    if (metroCardRef.current) {
-      setIsInitialLoad(false)
-      setTimeout(() => {
-        const swipeEvent = new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-          view: window
-        })
-        metroCardRef.current?.dispatchEvent(swipeEvent)
-      }, 50)
-    }
-  }
-
-  const startAutoTriggerTimer = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-    }
-
-    if (!hasInteracted && isReady) {
-      timeoutRef.current = setTimeout(() => {
-        triggerSwipe()
-      }, 2000)
-    }
-  }
-
-  const handleUserInteraction = () => {
-    if (!hasInteracted) {
-      setHasInteracted(true)
-      setIsInitialLoad(false)
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
-      }
-    }
-  }
-
-  // Handle component mounting and auto-trigger setup
-  useEffect(() => {
-    setIsReady(true)
-  }, [])
-
-  // Handle auto-trigger timer
-  useEffect(() => {
-    if (isReady) {
-      startAutoTriggerTimer()
-    }
-  }, [isReady])
-
-  // Handle user interaction events
-  useEffect(() => {
-    const handleInteraction = () => handleUserInteraction()
-
-    window.addEventListener('mousemove', handleInteraction)
-    window.addEventListener('keydown', handleInteraction)
-    window.addEventListener('touchstart', handleInteraction)
-
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
-      }
-      window.removeEventListener('mousemove', handleInteraction)
-      window.removeEventListener('keydown', handleInteraction)
-      window.removeEventListener('touchstart', handleInteraction)
-    }
-  }, [])
 
   const handleContainerClick = (e) => {
-    handleUserInteraction()
     if (e.target.closest('.metro-card')) return
-    triggerSwipe()
+    metroCardRef.current?.click()
   }
 
   return (
     <>
-      <SubwayBubbles />
+      <BackgroundVideo />
       <Container onClick={handleContainerClick}>
         <TitleContainer>
           <SubwaySign />
@@ -125,7 +54,6 @@ export default function LandingPage({ onUnlock }) {
         <SwipeSection
           onSwipeComplete={onUnlock}
           ref={metroCardRef}
-          isInitialLoad={isInitialLoad}
         />
       </Container>
     </>

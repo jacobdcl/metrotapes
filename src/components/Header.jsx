@@ -18,7 +18,7 @@ const HeaderContent = styled.div`
   position: relative;
 
   @media (min-width: 768px) {
-    padding: 0.75rem 1rem 0.75rem 2rem;
+    padding: 0.75rem 1rem 0.75rem 1rem;
   }
 
   &::after {
@@ -72,26 +72,22 @@ const ResetButton = styled.button`
   position: absolute;
   transition: all 0.2s ease;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-  right: ${props => props.$isHomePage ? '0' : 'auto'};
-  left: ${props => props.$isHomePage ? 'auto' : '50%'};
-  transform: ${props => props.$isHomePage ? 'none' : 'translateX(-50%)'};
+  right: 0;
+  transform: none;
 
   @media (min-width: 768px) {
     width: 52px;
     height: 52px;
+    display: ${props => props.$isHomePage ? 'block' : 'none'};
 
     &:hover {
-      transform: ${props => props.$isHomePage
-    ? 'translateY(-2px)'
-    : 'translateX(-50%) translateY(-2px)'};
+      transform: translateY(-2px);
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
                brightness(1.1);
     }
 
     &:active {
-      transform: ${props => props.$isHomePage
-    ? 'translateY(0)'
-    : 'translateX(-50%) translateY(0)'};
+      transform: translateY(0);
       filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))
                brightness(0.95);
     }
@@ -101,8 +97,6 @@ const ResetButton = styled.button`
     width: 42px;
     height: 42px;
     right: 0;
-    left: auto;
-    transform: none;
 
     &:hover {
       transform: translateY(-2px);
@@ -251,7 +245,7 @@ const MenuButton = styled.button`
 
 const TitleGroup = styled.div`
   display: flex;
-  align-items: center;
+  align-items: left;
 `
 
 const TitleSection = styled.div`

@@ -9,6 +9,7 @@ const VideoWrapper = styled.div`
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+  background: #000;
   
   &::after {
     content: '';
@@ -29,16 +30,18 @@ const Video = styled.iframe`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1.1);
+  border: none;
 `
 
 export default function BackgroundVideo() {
   return (
     <VideoWrapper>
       <Video
-        src="https://www.youtube.com/embed/HVR-J4_80jU?autoplay=1&mute=1&controls=0&loop=1&playlist=HVR-J4_80jU&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
+        src="https://www.youtube.com/embed/HVR-J4_80jU?autoplay=1&mute=1&controls=0&loop=1&playlist=HVR-J4_80jU&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=0&origin=metrotapes.com&widget_referrer=metrotapes.com&color=white&disablekb=1&fs=0&version=3&autohide=1"
         title="Background Video"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
+        frameBorder="0"
       />
     </VideoWrapper>
   )
