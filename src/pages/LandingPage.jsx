@@ -40,33 +40,65 @@ export default function LandingPage({ onUnlock }) {
   const metroCardRef = useRef(null)
   const timeoutRef = useRef(null)
   const [hasInteracted, setHasInteracted] = useState(false)
+  const [isReady, setIsReady] = useState(false)
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
+
+  const triggerSwipe = () => {
+    if (metroCardRef.current) {
+      setIsInitialLoad(false)
+      const swipeEvent = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      })
+      metroCardRef.current.dispatchEvent(swipeEvent)
+    }
+  }
 
   const startAutoTriggerTimer = () => {
-    clearTimeout(timeoutRef.current)
-    if (!hasInteracted) {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+
+    if (!hasInteracted && isReady) {
       timeoutRef.current = setTimeout(() => {
-        metroCardRef.current?.click()
+        triggerSwipe()
       }, 3000)
     }
   }
 
   const handleUserInteraction = () => {
     setHasInteracted(true)
-    clearTimeout(timeoutRef.current)
+    setIsInitialLoad(false)
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
   }
 
+  // Handle component mounting and auto-trigger setup
   useEffect(() => {
-    // Start the initial timer
-    startAutoTriggerTimer()
+    setIsReady(true)
+  }, [])
 
-    // Set up event listeners for user interaction
+  // Handle auto-trigger timer
+  useEffect(() => {
+    if (isReady) {
+      startAutoTriggerTimer()
+    }
+  }, [isReady])
+
+  // Handle user interaction events
+  useEffect(() => {
     const handleInteraction = () => handleUserInteraction()
+
     window.addEventListener('mousemove', handleInteraction)
     window.addEventListener('keydown', handleInteraction)
     window.addEventListener('touchstart', handleInteraction)
 
     return () => {
-      clearTimeout(timeoutRef.current)
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
       window.removeEventListener('mousemove', handleInteraction)
       window.removeEventListener('keydown', handleInteraction)
       window.removeEventListener('touchstart', handleInteraction)
@@ -75,9 +107,8 @@ export default function LandingPage({ onUnlock }) {
 
   const handleContainerClick = (e) => {
     handleUserInteraction()
-    // Don't trigger if clicking on the MetroCard itself
     if (e.target.closest('.metro-card')) return
-    metroCardRef.current?.click()
+    triggerSwipe()
   }
 
   return (
@@ -87,7 +118,11 @@ export default function LandingPage({ onUnlock }) {
         <TitleContainer>
           <SubwaySign />
         </TitleContainer>
-        <SwipeSection onSwipeComplete={onUnlock} ref={metroCardRef} />
+        <SwipeSection
+          onSwipeComplete={onUnlock}
+          ref={metroCardRef}
+          isInitialLoad={isInitialLoad}
+        />
       </Container>
     </>
   )

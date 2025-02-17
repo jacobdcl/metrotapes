@@ -31,13 +31,22 @@ const bounce = keyframes`
   100% { transform: translate(0, 0) scale(1); }
 `
 
+const slowSwipe = keyframes`
+  0% { transform: translateX(0) rotate(0deg); }
+  20% { transform: translateX(-10px) rotate(-2deg); }
+  40% { transform: translateX(5px) rotate(1deg); }
+  60% { transform: translateX(-8px) rotate(-1.5deg); }
+  80% { transform: translateX(3px) rotate(0.5deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+`
+
 const CardContainer = styled(animated.div)`
   cursor: pointer;
   touch-action: none;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
   transition: filter 0.3s ease;
-  animation: ${bounce} 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  animation-delay: 1s;
+  animation: ${props => props.$isInitialLoad ? slowSwipe : bounce} ${props => props.$isInitialLoad ? '3s' : '3s'} cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: ${props => props.$isInitialLoad ? '0s' : '1s'};
   -webkit-tap-highlight-color: transparent;
 
   &:hover {
@@ -53,17 +62,13 @@ const Card = styled.img`
   -webkit-user-drag: none;
   transform-origin: center center;
   will-change: transform;
-  animation: 
-    ${floatY} 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite,
-    ${floatX} 3s cubic-bezier(0.4, 0, 0.2, 1) infinite,
-    ${tilt} 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 
   @media (min-width: 768px) {
     height: 180px;
   }
 `
 
-const MetroCard = forwardRef(({ onSwipeComplete }, ref) => {
+const MetroCard = forwardRef(({ onSwipeComplete, isInitialLoad }, ref) => {
   const [isDragging, setIsDragging] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
 
@@ -122,6 +127,7 @@ const MetroCard = forwardRef(({ onSwipeComplete }, ref) => {
       role="button"
       tabIndex={0}
       ref={ref}
+      $isInitialLoad={isInitialLoad}
       onKeyPress={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           handleClick(e)
@@ -143,6 +149,11 @@ const MetroCard = forwardRef(({ onSwipeComplete }, ref) => {
 
 MetroCard.propTypes = {
   onSwipeComplete: PropTypes.func.isRequired,
+  isInitialLoad: PropTypes.bool,
+}
+
+MetroCard.defaultProps = {
+  isInitialLoad: false,
 }
 
 MetroCard.displayName = 'MetroCard'
