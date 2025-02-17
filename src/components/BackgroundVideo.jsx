@@ -27,10 +27,16 @@ const Video = styled.iframe`
   height: 100vh;
   object-fit: cover;
   position: absolute;
-  top: 50%;
+  top: calc(50% - 3rem);
   left: 50%;
-  transform: translate(-50%, -50%) scale(1.1);
+  transform: translate(-50%, -50%) scale(1.5);
   border: none;
+
+  @media (max-width: 768px) {
+    width: 150vw;
+    height: 150vh;
+    transform: translate(-50%, -50%) scale(2.5);
+  }
 `
 
 export default function BackgroundVideo() {
