@@ -5,16 +5,31 @@ import PropTypes from 'prop-types'
 
 const float = keyframes`
   0% { 
-    transform: translate(0, 0) scale(1);
+    transform: translate(0, 0) scale(1) rotate(-2deg);
     filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
   }
   50% {
-    transform: translate(15px, -30px) scale(1.08);
+    transform: translate(15px, -30px) scale(1.08) rotate(-2deg);
     filter: drop-shadow(0 24px 32px rgba(0, 0, 0, 0.3));
   }
   100% { 
-    transform: translate(0, 0) scale(1);
+    transform: translate(0, 0) scale(1) rotate(-2deg);
     filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+  }
+`
+
+const glow = keyframes`
+  0% {
+    filter: drop-shadow(0 0 10px rgba(252, 204, 10, 0.3))
+            drop-shadow(0 0 20px rgba(252, 204, 10, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(252, 204, 10, 0.5))
+            drop-shadow(0 0 30px rgba(252, 204, 10, 0.3));
+  }
+  100% {
+    filter: drop-shadow(0 0 10px rgba(252, 204, 10, 0.3))
+            drop-shadow(0 0 20px rgba(252, 204, 10, 0.2));
   }
 `
 
@@ -46,6 +61,7 @@ const Card = styled.img`
   -webkit-user-drag: none;
   transform-origin: center;
   will-change: transform;
+  animation: ${glow} 3s ease-in-out infinite;
 
   @media (min-width: 768px) {
     height: 180px;
